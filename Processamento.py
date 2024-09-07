@@ -4,7 +4,7 @@ from MaquinaNorma import MaquinaNorma
 def executar_programa(texto_registradores, texto_programa):
     maquina = MaquinaNorma()
     maquina.executar(texto_registradores, texto_programa)
-    print(maquina.saida)
+    return maquina.saida
 
 # Teste
 # texto_registradores = "a: 0, b: 5"
