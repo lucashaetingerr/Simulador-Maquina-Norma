@@ -1,0 +1,17 @@
+# c := c + b
+# Macro que realiza a soma do registrador b com o c e armazena o resultado em c
+# e preserva o valor do registrador b utilizando o registrador d
+
+# Garantir que o valor de c e d é 0
+1: faça zerar_d vá_para 3
+
+# Enquanto b > 0 adicionar em c e d
+3: se zero_b então vá_para 7 senão vá_para 4
+4: faça add_c vá_para 5
+5: faça add_d vá_para 6
+6: faça sub_b vá_para 3
+
+# Recuperar o valor de b e adicionar em c utilizando o registrador d
+7: se zero_d então vá_para 10 senão vá_para 8
+8: faça add_b vá_para 9
+9: faça sub_d vá_para 7

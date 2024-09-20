@@ -1,0 +1,2 @@
+1: se zero_b então vá_para 3 senão vá_para 2
+2: faça sub_b vá_para 1
