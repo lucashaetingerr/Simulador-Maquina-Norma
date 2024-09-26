@@ -1,0 +1,23 @@
+# Macro que verifica se o registrador a é menor que b e armazena o resultado em c (se a < b: c = 1 senão c = 0)
+# e preserva o valor dos registradores a e b utilizando o registrador d
+
+# Garantir que o valor de c e d é 0
+1: faça zerar_c vá_para 2
+2: faça zerar_d vá_para 3
+
+# Enquanto a > 0 e b > 0 subtrair a e b
+3: se zero_a então vá_para 8 senão vá_para 4
+4: se zero_b então vá_para 8 senão vá_para 5
+5: faça sub_a vá_para 6
+6: faça sub_b vá_para 7
+7: faça add_d vá_para 3
+
+# Caso b não for 0, significa que ele era maior que a
+8: se zero_b então vá_para 10 senão vá_para 9
+9: faça add_c vá_para 10
+
+# Recuperar o valor do registrador a e b utilizando o registrador d
+10: se zero_d então vá_para 14 senão vá_para 11
+11: faça add_a vá_para 12
+12: faça add_b vá_para 13
+13: faça sub_d vá_para 10
