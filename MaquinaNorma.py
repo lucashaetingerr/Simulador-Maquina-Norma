@@ -5,10 +5,12 @@ from Programa import Programa
 
 class MaquinaNorma:
 	def __init__(self):
+		self.num_max_iteracoes: int = 100000
 		self.registradores: dict[str, int] = {}
 		self.macros: dict[str, Programa] = {}
 		self.debug: bool = False
 		self.saida: str = ""
+		self.iteracoes: int = 0
 
 	def executar(self, texto_registradores: str, texto_programa: str) -> bool:
 		self.__inicializar_registradores(texto_registradores)
@@ -25,12 +27,12 @@ class MaquinaNorma:
 		if len(texto_registradores) == 0:
 			return
 
-		linhas = texto_registradores.split(',')
+		registradores = texto_registradores.split(',')
 
-		for linha in linhas:
-			registrador_regex = re.search("^(\w+):[ ]*(\d+)$", linha.strip(), re.IGNORECASE)
+		for reg in registradores:
+			registrador_regex = re.search("^(\w+):[ ]*(\d+)$", reg.strip(), re.IGNORECASE)
 			if registrador_regex is None:
-				raise Exception(f"Registradores | A linha: \"{linha}\" não é válida")
+				raise Exception(f"Registradores | A entrada \"{reg}\" não é válida")
 
 			nome_registrador = registrador_regex.group(1)
 			valor_registrador = int(registrador_regex.group(2))
@@ -68,12 +70,17 @@ class MaquinaNorma:
 
 	def __executar_programa(self, programa: Programa):
 		if programa.rotulo_inicial is None:
-			raise Exception(f"Rótulo inicial do programa não definido")
+			raise Exception(f"Rótulo inicial do programa ({programa.nome}) não definido")
 
 		proximo_rotulo = programa.rotulo_inicial
 
 		while True:
 			rotulo_atual = proximo_rotulo
+			self.iteracoes += 1
+
+			if self.iteracoes >= self.num_max_iteracoes:
+				raise Exception(f"O programa especificado atingiu o número máximo de interações definidas ({self.iteracoes}). "
+								f"Verifique a saida pois o programa pode estar em loop infinito")
 
 			str_regs = ""
 			for reg_name in self.registradores:
@@ -155,6 +162,9 @@ class MaquinaNorma:
 		if nome_registrador not in self.registradores:
 			#self.registradores[nome_registrador] = 0
 			raise Exception(f"Registrador {nome_registrador} não definido")
+
+		if self.registradores[nome_registrador] == 0:
+			raise Exception(f"Não é possível realizar a subtração do registrador {nome_registrador}, pois a máquina norma não aceita números negativos")
 
 		self.registradores[nome_registrador] -= 1
 

@@ -1,5 +1,5 @@
-#Processamento
-import Processamento as Processamento
+#MaquinaNorma
+from MaquinaNorma import MaquinaNorma
 
 #Definiçoes da janela e seus componentes
 import tkinter as tk
@@ -44,16 +44,21 @@ def execucao():
         
         
     def enviar():
+        maquina = MaquinaNorma()
         try:
             texto_registradores=entrada_a.get()
             texto_programa=entrada_comandos.get("1.0", tk.END).strip()
             limpar_console()
-            saida=Processamento.executar_programa(texto_registradores, texto_programa)
-            adicionar_ao_console(str(saida))
+            maquina.executar(texto_registradores, texto_programa)
+            adicionar_ao_console(maquina.saida)
             
         except Exception as e:
             limpar_console()
-            adicionar_ao_console("Encontramos um erro ao processar os dados fornecidos no formato indicado.")
+            texto = maquina.saida
+            if len(texto) > 0:
+                texto += "\n\n"
+            texto += str(e)
+            adicionar_ao_console(texto)
 
 
 

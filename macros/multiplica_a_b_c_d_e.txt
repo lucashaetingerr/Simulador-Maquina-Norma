@@ -1,0 +1,22 @@
+# Macro que realiza a multiplicação do registrador a com b e armazena o resultado em c
+# e preserva o valor do registrador a utilizando o registrador e
+
+# Garantir que o valor de c, d, e é 0
+1: faça zerar_c vá_para 2
+2: faça zerar_d vá_para 3
+3: faça zerar_e vá_para 4
+
+# Enquanto a > 0 fazer c := c + b e adicionar e
+4: se zero_a então vá_para 8 senão vá_para 5
+5: faça soma_c_c_b_d vá_para 6
+6: faça add_e vá_para 7
+7: faça sub_a vá_para 4
+
+# Recuperar o valor de a utilizando o registrador e
+8: se zero_e então vá_para 11 senão vá_para 9
+9: faça add_a vá_para 10
+10: faça sub_e vá_para 8
+
+
+
+
